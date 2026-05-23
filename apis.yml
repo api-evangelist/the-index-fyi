@@ -1,0 +1,106 @@
+aid: the-index-fyi
+name: The Index
+description: >-
+  theindex.fyi is a maintained meta-index of indie web and small web index
+  sites — a curated catalog of curated catalogs. It tracks ~40 indexes
+  spanning six categories (curated directories, RSS / feed aggregators,
+  search engines, random-discovery tools, constraint-based clubs, and
+  IndieWeb infrastructure), and exposes the catalog through a public,
+  read-only JSON:API.
+type: Index
+position: Provider
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Indie Web
+  - Small Web
+  - Directories
+  - Search
+  - RSS
+  - Webrings
+  - Open Data
+  - JSON:API
+url: https://raw.githubusercontent.com/api-evangelist/the-index-fyi/refs/heads/main/apis.yml
+created: '2026-05-23'
+modified: '2026-05-23'
+specificationVersion: '0.20'
+apis:
+  - aid: the-index-fyi:indexes
+    name: The Index Public API
+    description: >-
+      Public, read-only API listing every active index in theindex.fyi.
+      Responses follow JSON:API 1.1 (`application/vnd.api+json`) and
+      include filterable / paginated collection endpoints plus single-
+      resource lookups by slug. Rate-limited to 60 requests / minute per
+      IP, with standard `X-RateLimit-*` and `Retry-After` headers.
+    humanURL: https://theindex.fyi/api/docs
+    baseURL: https://theindex.fyi/api
+    version: '1.0'
+    tags:
+      - Indexes
+      - Curated Directories
+      - RSS Aggregators
+      - Search Engines
+      - Random Discovery
+      - Constraint-Based Clubs
+      - IndieWeb Infrastructure
+    properties:
+      - type: Documentation
+        url: https://theindex.fyi/api/docs
+      - type: OpenAPI
+        url: openapi/the-index-fyi-openapi.yml
+      - type: OpenAPI
+        url: openapi/the-index-fyi-openapi.json
+      - type: HumanURL
+        url: https://theindex.fyi/
+      - type: AboutUs
+        url: https://theindex.fyi/about
+    features:
+      - name: List Indexes
+        description: Paginated, filterable collection of all active indexes (`/indexes`).
+      - name: Get Index by Slug
+        description: Retrieve a single index by its URL-safe slug (`/indexes/{slug}`).
+      - name: Filter by Category
+        description: Filter the collection by category (`curated_directories`, `rss_aggregators`, `search_engines`, `random_discovery`, `constraint_based_clubs`, `indieweb_infrastructure`).
+      - name: Filter by Language
+        description: Filter the collection by primary language code.
+      - name: JSON:API 1.1
+        description: Responses follow the JSON:API 1.1 spec with `data`, `links`, and `meta` envelopes.
+      - name: Rate Limit Headers
+        description: 60 requests / minute / IP, with `X-RateLimit-Limit`, `X-RateLimit-Remaining`, and `Retry-After` headers on every response.
+      - name: Header-Based Versioning Plan
+        description: API is currently unversioned; if breaking changes are needed, an `API-Version` request header will be introduced (no URL prefix changes).
+    useCases:
+      - name: IndieWeb Discovery
+        description: Power directories, dashboards, and search clients that surface indie / small-web entry points.
+      - name: Newsletter and Aggregator Tooling
+        description: Pull the latest set of indexes into newsletters and feed dashboards.
+      - name: Research and Catalog Analysis
+        description: Track the indie / small-web ecosystem over time as a primary data source.
+    integrations:
+      - name: IndieWeb
+      - name: Webrings
+      - name: ooh.directory
+      - name: Marginalia Search
+      - name: Kagi Small Web
+    authentication:
+      - type: None
+        description: Public read-only API. No API key required.
+common:
+  - type: Website
+    url: https://theindex.fyi/
+  - type: AboutUs
+    url: https://theindex.fyi/about
+  - type: Documentation
+    url: https://theindex.fyi/api/docs
+  - type: OpenAPI
+    url: openapi/the-index-fyi-openapi.yml
+  - type: Plan
+    url: plans/the-index-fyi-plans-pricing.yml
+  - type: Rate Limit
+    url: rate-limits/the-index-fyi-rate-limits.yml
+  - type: FinOps
+    url: finops/the-index-fyi-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
