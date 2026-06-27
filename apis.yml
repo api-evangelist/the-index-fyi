@@ -95,9 +95,9 @@ common:
     url: https://theindex.fyi/api/docs
   - type: OpenAPI
     url: openapi/the-index-fyi-openapi.yml
-  - type: Plan
+  - type: Plans
     url: plans/the-index-fyi-plans-pricing.yml
-  - type: Rate Limit
+  - type: RateLimits
     url: rate-limits/the-index-fyi-rate-limits.yml
   - type: FinOps
     url: finops/the-index-fyi-finops.yml
