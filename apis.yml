@@ -87,6 +87,8 @@ apis:
       - type: None
         description: Public read-only API. No API key required.
 common:
+  - type: AgenticAccess
+    url: agentic-access/the-index-fyi-agentic-access.yml
   - type: DomainSecurity
     url: security/the-index-fyi-domain-security.yml
   - type: Website
