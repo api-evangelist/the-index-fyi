@@ -1,44 +1,48 @@
 openapi: 3.1.0
-
 info:
-  title: theindex.fyi
+  title: theindex.fyi Indexes API
   version: '1.0'
-  description: |
-    A public, read-only API for theindex.fyi — a maintained meta-index of indie web
+  description: 'A public, read-only API for theindex.fyi — a maintained meta-index of indie web
+
     and small web index sites.
 
+
     All responses follow the [JSON:API 1.1](https://jsonapi.org/) specification and use
+
     the `application/vnd.api+json` content type.
 
+
     **Rate limiting:** 60 requests per minute per IP. Responses include `X-RateLimit-Limit`,
+
     `X-RateLimit-Remaining`, and `Retry-After` headers.
 
+
     **Versioning:** The API is currently unversioned. If a breaking change is ever necessary,
+
     versioning will be introduced via an `API-Version` request header rather than URL prefixes.
+
+    '
   contact:
     url: https://theindex.fyi/about
-
 servers:
-  - url: https://theindex.fyi/api
-    description: Production
-
+- url: https://theindex.fyi/api
+  description: Production
 tags:
-  - name: Indexes
-    description: Approved indie web and small web index sites.
-
+- name: Indexes
+  description: Approved indie web and small web index sites.
 paths:
-
   /indexes:
     get:
       operationId: listIndexes
       summary: List indexes
       description: Returns a paginated, filterable list of all active indexes.
-      tags: [Indexes]
+      tags:
+      - Indexes
       parameters:
-        - $ref: '#/components/parameters/FilterCategory'
-        - $ref: '#/components/parameters/FilterLanguage'
-        - $ref: '#/components/parameters/PageNumber'
-        - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/FilterCategory'
+      - $ref: '#/components/parameters/FilterLanguage'
+      - $ref: '#/components/parameters/PageNumber'
+      - $ref: '#/components/parameters/PageSize'
       responses:
         '200':
           description: A paginated collection of index resources.
@@ -48,19 +52,19 @@ paths:
                 $ref: '#/components/schemas/IndexCollection'
               example:
                 data:
-                  - type: indexes
-                    id: '1'
-                    attributes:
-                      name: ooh.directory
-                      slug: ooh-directory
-                      url: https://ooh.directory
-                      description: A curated directory of personal websites and blogs.
-                      category: curated_directories
-                      language: null
-                      accepts_submissions: true
-                      last_checked_at: '2026-05-01T12:00:00Z'
-                    links:
-                      self: https://theindex.fyi/api/indexes/ooh-directory
+                - type: indexes
+                  id: '1'
+                  attributes:
+                    name: ooh.directory
+                    slug: ooh-directory
+                    url: https://ooh.directory
+                    description: A curated directory of personal websites and blogs.
+                    category: curated_directories
+                    language: null
+                    accepts_submissions: true
+                    last_checked_at: '2026-05-01T12:00:00Z'
+                  links:
+                    self: https://theindex.fyi/api/indexes/ooh-directory
                 meta:
                   total: 84
                   per_page: 25
@@ -74,21 +78,21 @@ paths:
                   next: https://theindex.fyi/api/indexes?page[number]=2
         '429':
           $ref: '#/components/responses/TooManyRequests'
-
   /indexes/{slug}:
     get:
       operationId: getIndex
       summary: Get an index
       description: Returns a single index by its slug.
-      tags: [Indexes]
+      tags:
+      - Indexes
       parameters:
-        - name: slug
-          in: path
-          required: true
-          description: The unique slug of the index.
-          schema:
-            type: string
-          example: ooh-directory
+      - name: slug
+        in: path
+        required: true
+        description: The unique slug of the index.
+        schema:
+          type: string
+        example: ooh-directory
       responses:
         '200':
           description: A single index resource.
@@ -115,70 +119,17 @@ paths:
           $ref: '#/components/responses/NotFound'
         '429':
           $ref: '#/components/responses/TooManyRequests'
-
 components:
-
-  parameters:
-
-    FilterCategory:
-      name: filter[category]
-      in: query
-      required: false
-      description: Filter indexes by category.
-      schema:
-        type: string
-        enum:
-          - curated_directories
-          - rss_feed_aggregators
-          - search_engines
-          - random_discovery
-          - constraint_based_clubs
-          - indieweb_infrastructure
-      example: curated_directories
-
-    FilterLanguage:
-      name: filter[language]
-      in: query
-      required: false
-      description: Filter by ISO 639-1 language code. Omit to return all languages.
-      schema:
-        type: string
-        minLength: 2
-        maxLength: 2
-      example: es
-
-    PageNumber:
-      name: page[number]
-      in: query
-      required: false
-      description: Page number (1-based).
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-
-    PageSize:
-      name: page[size]
-      in: query
-      required: false
-      description: Number of results per page. Maximum 100.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-
   schemas:
-
     IndexAttributes:
       type: object
       required:
-        - name
-        - slug
-        - url
-        - description
-        - category
-        - accepts_submissions
+      - name
+      - slug
+      - url
+      - description
+      - category
+      - accepts_submissions
       properties:
         name:
           type: string
@@ -201,15 +152,17 @@ components:
           type: string
           description: The category this index belongs to.
           enum:
-            - curated_directories
-            - rss_feed_aggregators
-            - search_engines
-            - random_discovery
-            - constraint_based_clubs
-            - indieweb_infrastructure
+          - curated_directories
+          - rss_feed_aggregators
+          - search_engines
+          - random_discovery
+          - constraint_based_clubs
+          - indieweb_infrastructure
           example: curated_directories
         language:
-          type: ['string', 'null']
+          type:
+          - string
+          - 'null'
           description: ISO 639-1 language code of the index's primary language. Null if English or unknown.
           example: es
         accepts_submissions:
@@ -217,18 +170,24 @@ components:
           description: Whether this index accepts submissions from the public.
           example: true
         last_checked_at:
-          type: ['string', 'null']
+          type:
+          - string
+          - 'null'
           format: date-time
           description: When the link was last verified as live.
           example: '2026-05-01T12:00:00Z'
-
     IndexResourceObject:
       type: object
-      required: [type, id, attributes, links]
+      required:
+      - type
+      - id
+      - attributes
+      - links
       properties:
         type:
           type: string
-          enum: [indexes]
+          enum:
+          - indexes
         id:
           type: string
           description: Unique numeric ID as a string, per JSON:API spec.
@@ -237,23 +196,54 @@ components:
           $ref: '#/components/schemas/IndexAttributes'
         links:
           type: object
-          required: [self]
+          required:
+          - self
           properties:
             self:
               type: string
               format: uri
               example: https://theindex.fyi/api/indexes/ooh-directory
-
+    ErrorDocument:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ErrorObject'
+    ErrorObject:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: string
+          description: HTTP status code as a string.
+          example: '404'
+        title:
+          type: string
+          description: Short, human-readable summary of the problem.
+          example: Not Found
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence.
+          example: No index exists with the slug "not-a-real-index".
     IndexResource:
       type: object
-      required: [data]
+      required:
+      - data
       properties:
         data:
           $ref: '#/components/schemas/IndexResourceObject'
-
     IndexCollection:
       type: object
-      required: [data, meta, links]
+      required:
+      - data
+      - meta
+      - links
       properties:
         data:
           type: array
@@ -261,7 +251,11 @@ components:
             $ref: '#/components/schemas/IndexResourceObject'
         meta:
           type: object
-          required: [total, per_page, current_page, last_page]
+          required:
+          - total
+          - per_page
+          - current_page
+          - last_page
           properties:
             total:
               type: integer
@@ -278,7 +272,10 @@ components:
               example: 4
         links:
           type: object
-          required: [self, first, last]
+          required:
+          - self
+          - first
+          - last
           properties:
             self:
               type: string
@@ -290,53 +287,16 @@ components:
               type: string
               format: uri
             prev:
-              type: ['string', 'null']
+              type:
+              - string
+              - 'null'
               format: uri
             next:
-              type: ['string', 'null']
+              type:
+              - string
+              - 'null'
               format: uri
-
-    ErrorObject:
-      type: object
-      required: [status, title]
-      properties:
-        status:
-          type: string
-          description: HTTP status code as a string.
-          example: '404'
-        title:
-          type: string
-          description: Short, human-readable summary of the problem.
-          example: Not Found
-        detail:
-          type: string
-          description: Human-readable explanation specific to this occurrence.
-          example: No index exists with the slug "not-a-real-index".
-
-    ErrorDocument:
-      type: object
-      required: [errors]
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/ErrorObject'
-
   responses:
-
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-          example:
-            errors:
-              - status: '404'
-                title: Not Found
-                detail: No index exists with the slug "not-a-real-index".
-
     TooManyRequests:
       description: Rate limit exceeded. Wait for the `Retry-After` period before retrying.
       headers:
@@ -361,6 +321,62 @@ components:
             $ref: '#/components/schemas/ErrorDocument'
           example:
             errors:
-              - status: '429'
-                title: Too Many Requests
-                detail: Rate limit of 60 requests per minute exceeded. Please slow down.
+            - status: '429'
+              title: Too Many Requests
+              detail: Rate limit of 60 requests per minute exceeded. Please slow down.
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+          example:
+            errors:
+            - status: '404'
+              title: Not Found
+              detail: No index exists with the slug "not-a-real-index".
+  parameters:
+    PageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: Page number (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    FilterCategory:
+      name: filter[category]
+      in: query
+      required: false
+      description: Filter indexes by category.
+      schema:
+        type: string
+        enum:
+        - curated_directories
+        - rss_feed_aggregators
+        - search_engines
+        - random_discovery
+        - constraint_based_clubs
+        - indieweb_infrastructure
+      example: curated_directories
+    PageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of results per page. Maximum 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    FilterLanguage:
+      name: filter[language]
+      in: query
+      required: false
+      description: Filter by ISO 639-1 language code. Omit to return all languages.
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 2
+      example: es
