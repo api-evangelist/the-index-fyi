@@ -1,0 +1,14 @@
+{
+  "provider": "the-index-fyi",
+  "sources": [
+    "the-index-fyi-indexes-api-openapi.yml"
+  ],
+  "outputs": [
+    "the-index-fyi-indexes-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
