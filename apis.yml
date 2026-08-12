@@ -65,7 +65,7 @@ common:
   - type: Documentation
     url: https://theindex.fyi/api/docs
   - type: OpenAPI
-    url: openapi/the-index-fyi-openapi.yml
+    url: openapi/_original/the-index-fyi-openapi.yml
   - type: Plans
     url: plans/the-index-fyi-plans-pricing.yml
   - type: RateLimits
