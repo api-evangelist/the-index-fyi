@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "theindex.fyi Indexes API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Indexes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://theindex.fyi/api/indexes",
+            "params": [
+              {
+                "name": "filter[category]",
+                "value": "curated_directories",
+                "type": "query",
+                "description": "Filter indexes by category."
+              },
+              {
+                "name": "filter[language]",
+                "value": "es",
+                "type": "query",
+                "description": "Filter by ISO 639-1 language code. Omit to return all languages."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)."
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Maximum 100."
+              }
+            ]
+          },
+          "docs": "Returns a paginated, filterable list of all active indexes."
+        },
+        {
+          "info": {
+            "name": "Get an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://theindex.fyi/api/indexes/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "ooh-directory",
+                "type": "path",
+                "description": "The unique slug of the index."
+              }
+            ]
+          },
+          "docs": "Returns a single index by its slug."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
