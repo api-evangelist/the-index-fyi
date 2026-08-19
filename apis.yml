@@ -35,7 +35,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/the-index-fyi/refs/heads/main/apis.yml
 created: '2026-05-23'
 modified: '2026-05-23'
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 apis:
 - aid: the-index-fyi:the-index-fyi-indexes-api
   name: The Index Indexes API
