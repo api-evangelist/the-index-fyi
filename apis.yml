@@ -55,6 +55,8 @@ apis:
   humanURL: https://theindex.fyi/api/docs
   baseURL: https://theindex.fyi/api
   tags:
+  - Index
+  tags_raw:
   - Indexes
   properties:
   - type: OpenAPI
