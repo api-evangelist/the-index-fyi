@@ -103,59 +103,7 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  parameters:
-    PageNumber:
-      name: page[number]
-      in: query
-      required: false
-      description: Page number (1-based).
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    FilterLanguage:
-      name: filter[language]
-      in: query
-      required: false
-      description: Filter by ISO 639-1 language code. Omit to return all languages.
-      schema:
-        type: string
-        minLength: 2
-        maxLength: 2
-      example: es
-    FilterCategory:
-      name: filter[category]
-      in: query
-      required: false
-      description: Filter indexes by category.
-      schema:
-        type: string
-        enum:
-        - curated_directories
-        - rss_feed_aggregators
-        - search_engines
-        - random_discovery
-        - constraint_based_clubs
-        - indieweb_infrastructure
-      example: curated_directories
-    PageSize:
-      name: page[size]
-      in: query
-      required: false
-      description: Number of results per page. Maximum 100.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
   schemas:
-    IndexResource:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/IndexResourceObject'
     ErrorDocument:
       type: object
       required:
@@ -184,6 +132,33 @@ components:
           type: string
           description: Human-readable explanation specific to this occurrence.
           example: No index exists with the slug "not-a-real-index".
+    IndexResourceObject:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      - links
+      properties:
+        type:
+          type: string
+          enum:
+          - indexes
+        id:
+          type: string
+          description: Unique numeric ID as a string, per JSON:API spec.
+          example: '1'
+        attributes:
+          $ref: '#/components/schemas/IndexAttributes'
+        links:
+          type: object
+          required:
+          - self
+          properties:
+            self:
+              type: string
+              format: uri
+              example: https://theindex.fyi/api/indexes/ooh-directory
     IndexCollection:
       type: object
       required:
@@ -297,33 +272,58 @@ components:
           format: date-time
           description: When the link was last verified as live.
           example: '2026-05-01T12:00:00Z'
-    IndexResourceObject:
+    IndexResource:
       type: object
       required:
-      - type
-      - id
-      - attributes
-      - links
+      - data
       properties:
-        type:
-          type: string
-          enum:
-          - indexes
-        id:
-          type: string
-          description: Unique numeric ID as a string, per JSON:API spec.
-          example: '1'
-        attributes:
-          $ref: '#/components/schemas/IndexAttributes'
-        links:
-          type: object
-          required:
-          - self
-          properties:
-            self:
-              type: string
-              format: uri
-              example: https://theindex.fyi/api/indexes/ooh-directory
+        data:
+          $ref: '#/components/schemas/IndexResourceObject'
+  parameters:
+    PageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of results per page. Maximum 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    FilterLanguage:
+      name: filter[language]
+      in: query
+      required: false
+      description: Filter by ISO 639-1 language code. Omit to return all languages.
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 2
+      example: es
+    PageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: Page number (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    FilterCategory:
+      name: filter[category]
+      in: query
+      required: false
+      description: Filter indexes by category.
+      schema:
+        type: string
+        enum:
+        - curated_directories
+        - rss_feed_aggregators
+        - search_engines
+        - random_discovery
+        - constraint_based_clubs
+        - indieweb_infrastructure
+      example: curated_directories
   responses:
     TooManyRequests:
       description: Rate limit exceeded. Wait for the `Retry-After` period before retrying.
